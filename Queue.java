@@ -1,63 +1,72 @@
 public class Queue {
-    private int maxSize;
-    private int[] queueArray;
-    private int front;
-    private int rear;
-    private int nItems;
+    private int maxSize; // Максимальный размер очереди
+    private int[] queueArray; // Массив для хранения элементов очереди
+    private int front; // Индекс начала очереди (передний элемент)
+    private int rear; // Индекс конца очереди (задний элемент)
+    private int nItems; // Количество элементов в очереди
 
+    // Конструктор для инициализации очереди заданного размера
     public Queue(int size) {
-        maxSize = size;
-        queueArray = new int[maxSize];
-        front = 0;
-        rear = -1;
-        nItems = 0;
+        maxSize = size; // Устанавливаем максимальный размер очереди
+        queueArray = new int[maxSize]; // Инициализируем массив для хранения элементов
+        front = 0; // Устанавливаем начальный индекс переднего элемента на 0
+        rear = -1; // Устанавливаем начальный индекс заднего элемента на -1
+        nItems = 0; // Изначально количество элементов равно 0
     }
 
+    // Метод для вставки элемента в очередь
     public void insert(int value) {
-        if (rear == maxSize - 1) {
-            rear = -1;
+        if (rear == maxSize - 1) { // Если задний элемент достиг конца массива
+            rear = -1; // Перемещаем задний элемент в начало массива (циркулярная очередь)
         }
-        queueArray[++rear] = value;
-        nItems++;
+        queueArray[++rear] = value; // Увеличиваем индекс заднего элемента и вставляем новый элемент
+        nItems++; // Увеличиваем количество элементов в очереди
     }
 
+    // Метод для удаления элемента из очереди
     public int remove() {
-        int temp = queueArray[front++];
-        if (front == maxSize) {
-            front = 0;
+        int temp = queueArray[front++]; // Сохраняем передний элемент и увеличиваем индекс переднего элемента
+        if (front == maxSize) { // Если передний элемент достиг конца массива
+            front = 0; // Перемещаем передний элемент в начало массива (циркулярная очередь)
         }
-        nItems--;
-        return temp;
+        nItems--; // Уменьшаем количество элементов в очереди
+        return temp; // Возвращаем удаленный элемент
     }
 
+    // Метод для получения переднего элемента очереди без его удаления
     public int peekFront() {
-        return queueArray[front];
+        return queueArray[front]; // Возвращаем передний элемент
     }
 
+    // Метод для проверки, пуста ли очередь
     public boolean isEmpty() {
-        return (nItems == 0);
+        return (nItems == 0); // Возвращаем true, если количество элементов равно 0
     }
 
+    // Метод для проверки, полна ли очередь
     public boolean isFull() {
-        return (nItems == maxSize);
+        return (nItems == maxSize); // Возвращаем true, если количество элементов равно максимальному размеру
     }
 
+    // Метод для получения текущего размера очереди
     public int size() {
-        return nItems;
+        return nItems; // Возвращаем количество элементов в очереди
     }
 }
+
+// Главный класс для тестирования очереди
 class Main {
     public static void main(String[] args) {
-        Queue myQueue = new Queue(5);
+        Queue myQueue = new Queue(5); // Создаем очередь с максимальным размером 5
 
-        myQueue.insert(10);
+        myQueue.insert(10); // Вставляем элементы в очередь
         myQueue.insert(20);
         myQueue.insert(30);
         myQueue.insert(40);
 
-        System.out.println("Проверка наличия элементов в очереди: " + myQueue.isEmpty());
-        System.out.println("Размер очереди: " + myQueue.size());
-        System.out.println("Первый элемент в очереди: " + myQueue.peekFront());
-        System.out.println("Извлеченный элемент из очереди: " + myQueue.remove());
+        System.out.println("Проверка наличия элементов в очереди: " + myQueue.isEmpty()); // Проверяем, пуста ли очередь
+        System.out.println("Размер очереди: " + myQueue.size()); // Получаем текущий размер очереди
+        System.out.println("Первый элемент в очереди: " + myQueue.peekFront()); // Получаем передний элемент очереди без удаления
+        System.out.println("Извлеченный элемент из очереди: " + myQueue.remove()); // Удаляем и выводим передний элемент очереди
     }
 }
